@@ -8,14 +8,14 @@
 
 <h3 align="center">CHIRP</h3>
 
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
+[![Status](https://img.shields.io/badge/status-archived-red.svg)]()
 [![GitHub Issues](https://img.shields.io/github/issues/cisagov/chirp.svg)](https://github.com/cisagov/chirp/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/cisagov/chirp.svg)](https://github.com/cisagov/chirp/pulls)
 [![License](https://img.shields.io/badge/license-CC0_1.0-blue.svg)](/LICENSE)
 
 ---
 
-<p align="center"> A forensic collection tool written in Python.
+<p align="center"> A DFIR tool written in Python.
     <br>
 </p>
 <p align="center"> Watch the <a href="https://www.youtube.com/watch?v=UGYSNiNOpds">video overview</a></p>
@@ -43,10 +43,6 @@ dynamically query Indicators of Compromise (IoCs) on hosts with a single
 package, outputting data in a JSON format for further analysis in a SIEM
 or other tool. CHIRP does not modify any system data.
 
-The initial IoCs are intended to search for activity
-detailed in CISA Alert [AA21-008A](https://us-cert.cisa.gov/ncas/alerts/aa21-008a)
-that has spilled into the enterprise environment.
-
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
 We build and release CHIRP via
@@ -65,8 +61,6 @@ installing Python in your environment, follow the instructions
 [here](https://docs.Python.org/3/using/windows.html)
 
 CHIRP must be run on a live machine, but it does not have to be network connected.
-Currently, CHIRP must run on the drive containing winevt logs.  Shortly after release,
-this will be updated so CHIRP can run from any drive.
 
 ### Installing
 
@@ -84,20 +78,20 @@ with [Visual Studio Community](https://visualstudio.microsoft.com/vs/community/)
 
 ```console
 # defaults
-.\chirp.exe
+.\chirp.exe -a AA21-008A
 
 # with args
-.\chirp.exe -p registry yara -t c:\\target_dir\\** -o chirp_result -l debug --non-interactive
+.\chirp.exe -a AA21-062A -p registry yara -t c:\\target_dir\\** -o chirp_result --non-interactive -vv
 ```
 
 ### From python
 
 ```console
 # defaults
-python3 chirp.py
+python3 chirp.py -a AA21-008A
 
 # with args
-python3 chirp.py -p registry yara -t c:\\target_dir\\** -o chirp_result -l debug --non-interactive
+python3 chirp.py -a AA21-062A -p registry yara -t c:\\target_dir\\** -o chirp_result --non-interactive -vv
 ```
 
 ### Example output
@@ -115,6 +109,10 @@ python3 chirp.py -p registry yara -t c:\\target_dir\\** -o chirp_result -l debug
            [+] Done! Your results can be found at Z:\README\output.
 ```
 
+### Non-interactive Mode
+
+Non-interactive mode may be used by issuing the "--non-interactive" flag at runtime. Using this flag enables process completion without input. In addition, a non-zero status of 1 will be emitted at runtime completion if IoC's were discovered.
+
 ## ⛏️ Built Using <a name = "built_using"></a>
 
 - [Python](https://www.Python.org/) - Language
@@ -125,6 +123,8 @@ rules
 - [rich](https://github.com/willmcgugan/rich) - Makes the CLI easier on the eyes
 - [psutil](https://github.com/giampaolo/psutil) - Provides an easy API for many
 OS functions
+- [aiomp](https://pypi.org/project/aiomultiprocess/) - Asynchronous multiprocessing
+- [pyyaml](https://pyyaml.org/) - Allows YAML interpretation
 
 ## ✍️ Authors <a name = "authors"></a>
 
